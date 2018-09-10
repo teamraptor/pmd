@@ -7,17 +7,16 @@ package net.sourceforge.pmd.cpd.token;
 import net.sourceforge.pmd.lang.TokenManager;
 
 /**
- * A generic filter for JavaCC-based token managers that allows to use comments
- * to enable / disable analysis of parts of the stream
+ * A generic filter for Antlr-based languages allowing comments to enable/disable CPD analysis.
  */
-public class JavaCCTokenFilter extends AbstractTokenFilter {
+public class AntlrTokenFilter extends AbstractTokenFilter {
 
     /**
      * Creates a new AbstractTokenFilter
      *
      * @param tokenManager The token manager from which to retrieve tokens to be filtered
      */
-    public JavaCCTokenFilter(TokenManager tokenManager) {
+    public AntlrTokenFilter(TokenManager tokenManager) {
         super(tokenManager);
     }
 }

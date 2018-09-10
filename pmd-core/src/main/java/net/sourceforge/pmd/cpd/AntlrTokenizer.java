@@ -4,6 +4,7 @@
 
 package net.sourceforge.pmd.cpd;
 
+import net.sourceforge.pmd.cpd.token.AntlrTokenFilter;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.Lexer;
@@ -24,9 +25,10 @@ public abstract class AntlrTokenizer implements Tokenizer {
 
         AntlrTokenManager tokenManager = getLexerForSource(sourceCode);
         tokenManager.resetListeners();
+        final AntlrTokenFilter tokenFilter = new AntlrTokenFilter(tokenManager);
 
         try {
-            Token token = (Token) tokenManager.getNextToken();
+            Token token = (Token) tokenFilter.getNextToken();
 
             while (token.getType() != Token.EOF) {
                 if (token.getChannel() != Lexer.HIDDEN) {
