@@ -1,3 +1,7 @@
+/**
+ * BSD-style license; for more info see http://pmd.sourceforge.net/license.html
+ */
+
 package net.sourceforge.pmd.cpd.token;
 
 import net.sourceforge.pmd.lang.TokenManager;
@@ -6,7 +10,7 @@ import net.sourceforge.pmd.lang.ast.GenericToken;
 /**
  * Abstraction over token filter implementation.
  */
-public abstract class AbstractTokenFilter implements TokenFilter  {
+public abstract class AbstractTokenFilter implements TokenFilter {
 
     private final TokenManager tokenManager;
     private boolean discardingSuppressing;
