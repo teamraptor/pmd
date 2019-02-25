@@ -20,17 +20,17 @@ import net.sourceforge.pmd.lang.swift.antlr4.SwiftParser;
  */
 public class SwiftParserAdapter extends AntlrBaseParser {
 
-    public SwiftParserAdapter(ParserOptions parserOptions) {
+    public SwiftParserAdapter(final ParserOptions parserOptions) {
         super(parserOptions);
     }
 
     @Override
-    protected Lexer getLexer(Reader source) throws IOException{
+    protected Lexer getLexer(final Reader source) throws IOException {
         return new SwiftLexer(CharStreams.fromReader(source));
     }
 
     @Override
-    protected Parser getParser(Lexer lexer) {
+    protected Parser getParser(final Lexer lexer) {
         return new SwiftParser(new CommonTokenStream(lexer));
     }
 

@@ -31,11 +31,8 @@ public class SwiftHandler extends AbstractPmdLanguageVersionHandler {
 
     @Override
     public VisitorStarter getDumpFacade(final Writer writer, final String prefix, final boolean recurse) {
-        return new VisitorStarter() {
-            @Override
-            public void start(final Node rootNode) {
-                // TODO: implement dump for AntlrBaseNode
-            }
+        return rootNode -> {
+            // TODO: implement dump for AntlrBaseNode
         };
     }
 }

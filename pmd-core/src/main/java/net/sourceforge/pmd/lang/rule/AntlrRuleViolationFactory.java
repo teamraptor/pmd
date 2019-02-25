@@ -11,6 +11,7 @@ import net.sourceforge.pmd.lang.ast.AntlrBaseNode;
 import net.sourceforge.pmd.lang.ast.Node;
 
 public final class AntlrRuleViolationFactory extends AbstractRuleViolationFactory {
+
     public static final RuleViolationFactory INSTANCE = new AntlrRuleViolationFactory();
 
     private AntlrRuleViolationFactory() {
@@ -18,15 +19,15 @@ public final class AntlrRuleViolationFactory extends AbstractRuleViolationFactor
 
     @Override
     protected RuleViolation createRuleViolation(final Rule rule, final RuleContext ruleContext, final Node node,
-                                                final String message) {
+        final String message) {
         return new ParametricRuleViolation<>(rule, ruleContext, (AntlrBaseNode) node, message);
     }
 
     @Override
     protected RuleViolation createRuleViolation(final Rule rule, final RuleContext ruleContext, final Node node,
-                                                final String message, final int beginLine, final int endLine) {
-        final ParametricRuleViolation<AntlrBaseNode> violation = new ParametricRuleViolation<>(rule, ruleContext,
-                (AntlrBaseNode) node, message);
+        final String message, final int beginLine, final int endLine) {
+        final ParametricRuleViolation<AntlrBaseNode> violation =
+            new ParametricRuleViolation<>(rule, ruleContext, (AntlrBaseNode) node, message);
         violation.setLines(beginLine, endLine);
         return violation;
     }
