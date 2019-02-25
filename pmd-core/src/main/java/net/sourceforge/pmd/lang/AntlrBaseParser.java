@@ -66,7 +66,7 @@ public abstract class AntlrBaseParser implements Parser {
         return new HashMap<>();
     }
 
-    protected abstract Lexer getLexer(final Reader source) throws IOException;
+    protected abstract Lexer getLexer(Reader source) throws IOException;
 
-    protected abstract org.antlr.v4.runtime.Parser getParser(final Lexer lexer);
+    protected abstract org.antlr.v4.runtime.Parser getParser(Lexer lexer);
 }
