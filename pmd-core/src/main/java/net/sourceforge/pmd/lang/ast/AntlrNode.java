@@ -31,11 +31,6 @@ public interface AntlrNode extends Node {
     }
 
     @Override
-    default Node jjtGetParent() {
-        return null; // TODO: review this
-    }
-
-    @Override
     default void jjtAddChild(final Node child, final int index) {
         throw new UnsupportedOperationException("Out of scope for antlr current implementations");
     }
@@ -47,16 +42,6 @@ public interface AntlrNode extends Node {
 
     @Override
     default int jjtGetChildIndex() {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default Node jjtGetChild(final int index) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default int jjtGetNumChildren() {
         throw new UnsupportedOperationException("Out of scope for antlr current implementations");
     }
 
@@ -91,63 +76,7 @@ public interface AntlrNode extends Node {
     }
 
     @Override
-    default Node getNthParent(final int n) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> T getFirstParentOfType(final Class<T> parentType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> List<T> getParentsOfType(final Class<T> parentType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> T getFirstParentOfAnyType(final Class<? extends T>[] parentTypes) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> List<T> findChildrenOfType(final Class<T> childType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> List<T> findDescendantsOfType(final Class<T> targetType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> void findDescendantsOfType(final Class<T> targetType, final List<T> results,
-        final boolean crossFindBoundaries) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> T getFirstChildOfType(final Class<T> childType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> T getFirstDescendantOfType(final Class<T> descendantType) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default <T> boolean hasDescendantOfType(final Class<T> type) {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default List<? extends Node> findChildNodesWithXPath(final String xpathString) throws JaxenException {
-        throw new UnsupportedOperationException("Out of scope for antlr current implementations");
-    }
-
-    @Override
-    default boolean hasDescendantMatchingXPath(final String xpathString) {
+    default List<Node> findChildNodesWithXPath(final String xpathString) throws JaxenException {
         throw new UnsupportedOperationException("Out of scope for antlr current implementations");
     }
 }

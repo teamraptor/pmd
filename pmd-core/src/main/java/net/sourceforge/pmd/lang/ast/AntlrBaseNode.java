@@ -4,12 +4,8 @@
 
 package net.sourceforge.pmd.lang.ast;
 
-import java.util.Iterator;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 
-import net.sourceforge.pmd.lang.ast.xpath.Attribute;
-import net.sourceforge.pmd.lang.ast.xpath.AttributeAxisIterator;
 import net.sourceforge.pmd.lang.dfa.DataFlowNode;
 
 public class AntlrBaseNode extends ParserRuleContext implements AntlrNode {
@@ -24,6 +20,7 @@ public class AntlrBaseNode extends ParserRuleContext implements AntlrNode {
     /**
      * Constructor required by {@link ParserRuleContext}
      */
+    @SuppressWarnings("unused")
     public AntlrBaseNode() {
         // Nothing to be done
     }
@@ -34,8 +31,14 @@ public class AntlrBaseNode extends ParserRuleContext implements AntlrNode {
      * @param parent The parent
      * @param invokingStateNumber the invokingState defined by {@link org.antlr.v4.runtime.RuleContext} parent
      */
+    @SuppressWarnings("unused")
     public AntlrBaseNode(final ParserRuleContext parent, final int invokingStateNumber) {
         super(parent, invokingStateNumber);
+    }
+
+    @Override
+    public Node jjtGetParent() {
+        return (Node) parent; // TODO: review if all parents are Nodes
     }
 
     @Override
@@ -78,14 +81,19 @@ public class AntlrBaseNode extends ParserRuleContext implements AntlrNode {
         this.userData = userData;
     }
 
+    @Override
+    public Node jjtGetChild(final int index) {
+        return (Node) children.get(index); // TODO: review if all children are Nodes
+    }
+
+    @Override
+    public int jjtGetNumChildren() {
+        return children == null ? 0 : children.size();
+    }
+
     // TODO: should we make it abstract due to the comment in AbstractNode ?
     @Override
     public String getXPathNodeName() {
         return toString();
-    }
-
-    @Override
-    public Iterator<Attribute> getXPathAttributesIterator() {
-        return new AttributeAxisIterator(this);
     }
 }
