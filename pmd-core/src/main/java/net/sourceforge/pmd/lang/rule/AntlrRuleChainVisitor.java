@@ -13,8 +13,9 @@ import net.sourceforge.pmd.lang.ast.AntlrBaseNode;
 import net.sourceforge.pmd.lang.ast.Node;
 
 public class AntlrRuleChainVisitor extends AbstractRuleChainVisitor {
+
     @Override
-    protected void visit(Rule rule, Node node, RuleContext ctx) {
+    protected void visit(final Rule rule, final Node node, final RuleContext ctx) {
         if (rule instanceof AbstractAntlrVisitor) {
             ((AntlrBaseNode) node).accept((AbstractAntlrVisitor) rule);
         } else {
@@ -23,7 +24,7 @@ public class AntlrRuleChainVisitor extends AbstractRuleChainVisitor {
     }
 
     @Override
-    protected void indexNodes(List<Node> nodes, RuleContext ctx) {
+    protected void indexNodes(final List<Node> nodes, final RuleContext ctx) {
         final AbstractAntlrVisitor antlrVisitor = new AbstractAntlrVisitor<Object>() {
             // Perform a visitation of the AST to index nodes which need
             // visiting by type
@@ -34,8 +35,8 @@ public class AntlrRuleChainVisitor extends AbstractRuleChainVisitor {
             }
         };
 
-        for (int i = 0; i < nodes.size(); i++) {
-            antlrVisitor.visit((AntlrBaseNode) nodes.get(i));
+        for (final Node node : nodes) {
+            antlrVisitor.visit((AntlrBaseNode) node);
         }
     }
 }

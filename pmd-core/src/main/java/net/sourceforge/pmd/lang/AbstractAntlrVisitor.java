@@ -22,59 +22,67 @@ public abstract class AbstractAntlrVisitor<T> extends AbstractRule implements Pa
     protected RuleContext data;
 
     @Override
-    public void start(RuleContext ctx) {
+    public void start(final RuleContext ctx) {
         data = ctx;
     }
 
     @Override
-    public T visit(ParseTree tree) {
+    public T visit(final ParseTree tree) {
         return tree.accept(this);
     }
 
     @Override
-    public T visitChildren(RuleNode node) {
-        T result = this.defaultResult();
-        int n = node.getChildCount();
+    public T visitTerminal(final TerminalNode node) {
+        return defaultResult();
+    }
 
-        for (int i = 0; i < n && this.shouldVisitNextChild(node, result); ++i) {
-            ParseTree c = node.getChild(i);
-            T childResult = c.accept(this);
-            result = this.aggregateResult(result, childResult);
+    @Override
+    public T visitErrorNode(final ErrorNode node) {
+        return defaultResult();
+    }
+
+    @Override
+    public void apply(final List<? extends Node> nodes, final RuleContext ctx) {
+        visitAll(nodes);
+    }
+
+    /**
+     * Begin {@link org.antlr.v4.runtime.tree.AbstractParseTreeVisitor} section
+     */
+
+    @Override
+    public T visitChildren(final RuleNode node) {
+        T result = defaultResult();
+        final int n = node.getChildCount();
+
+        for (int i = 0; i < n && shouldVisitNextChild(node, result); ++i) {
+            final ParseTree c = node.getChild(i);
+            final T childResult = c.accept(this);
+            result = aggregateResult(result, childResult);
         }
 
         return result;
-    }
-
-    @Override
-    public T visitTerminal(TerminalNode node) {
-        return this.defaultResult();
-    }
-
-    @Override
-    public T visitErrorNode(ErrorNode node) {
-        return this.defaultResult();
     }
 
     protected T defaultResult() {
         return null;
     }
 
-    protected T aggregateResult(T aggregate, T nextResult) {
+    protected T aggregateResult(final T aggregate, final T nextResult) {
         return nextResult;
     }
 
-    protected boolean shouldVisitNextChild(RuleNode node, T currentResult) {
+    protected boolean shouldVisitNextChild(final RuleNode node, final T currentResult) {
         return true;
     }
 
-    @Override
-    public void apply(List<? extends Node> nodes, RuleContext ctx) {
-        visitAll(nodes);
-    }
+    /**
+     * End {@link org.antlr.v4.runtime.tree.AbstractParseTreeVisitor} section
+     */
 
-    protected void visitAll(List<? extends Node> nodes) {
-        for (Node n : nodes) {
-            AntlrBaseNode node = (AntlrBaseNode) n;
+    protected void visitAll(final List<? extends Node> nodes) {
+        for (final Node n : nodes) {
+            final AntlrBaseNode node = (AntlrBaseNode) n;
             visit(node);
         }
     }

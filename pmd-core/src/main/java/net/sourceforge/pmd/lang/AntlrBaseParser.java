@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.Parser;
 
 import net.sourceforge.pmd.lang.antlr.AntlrTokenManager;
 import net.sourceforge.pmd.lang.ast.AntlrBaseNode;
@@ -22,11 +21,11 @@ import net.sourceforge.pmd.lang.ast.ParseException;
 /**
  * Generic Antlr parser adapter for all Antlr parsers.
  */
-public abstract class AntlrBaseParser implements net.sourceforge.pmd.lang.Parser {
+public abstract class AntlrBaseParser implements Parser {
 
     protected final ParserOptions parserOptions;
 
-    public AntlrBaseParser(ParserOptions parserOptions) {
+    public AntlrBaseParser(final ParserOptions parserOptions) {
         this.parserOptions = parserOptions;
     }
 
@@ -36,32 +35,30 @@ public abstract class AntlrBaseParser implements net.sourceforge.pmd.lang.Parser
     }
 
     @Override
-    public TokenManager getTokenManager(String fileName, Reader source) {
+    public TokenManager getTokenManager(final String fileName, final Reader source) {
         try {
             return new AntlrTokenManager(getLexer(source), fileName);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public Node parse(String fileName, Reader source) throws ParseException {
+    public Node parse(final String fileName, final Reader source) throws ParseException {
         AntlrBaseNode rootNode = null;
         try {
-            Parser parser = getParser(getLexer(source));
-            Method rootMethod = parser.getClass().getMethod(parser.getRuleNames()[0]);
-            rootNode = (AntlrBaseNode) rootMethod.invoke(parser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+            rootNode = getRootNode(getParser(getLexer(source)));
+        } catch (final IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return rootNode;
+    }
+
+    private AntlrBaseNode getRootNode(final org.antlr.v4.runtime.Parser parser)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        final Method rootMethod = parser.getClass().getMethod(parser.getRuleNames()[0]);
+        return (AntlrBaseNode) rootMethod.invoke(parser);
     }
 
     @Override
@@ -69,7 +66,7 @@ public abstract class AntlrBaseParser implements net.sourceforge.pmd.lang.Parser
         return new HashMap<>();
     }
 
-    protected abstract Lexer getLexer(Reader source) throws IOException;
+    protected abstract Lexer getLexer(final Reader source) throws IOException;
 
-    protected abstract Parser getParser(Lexer lexer);
+    protected abstract org.antlr.v4.runtime.Parser getParser(final Lexer lexer);
 }
