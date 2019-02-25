@@ -14,6 +14,6 @@
                  value="public abstract class SwiftBaseVisitor" />
         <replace file="${target-package-dir}/SwiftBaseVisitor.java"
                  token="import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;"
-                 value="import net.sourceforge.pmd.lang.swift.AbstractAntlrVisitor;" />
+                 value="import net.sourceforge.pmd.lang.AbstractAntlrVisitor;" />
     </target>
 </project>
